@@ -15,4 +15,36 @@ class Task extends Model
      */
     public $timestamps = false;
 
+    /**
+     * Scopes a query to only include tasks that are in progress.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeInProgress($query)
+    {
+        return $query->where('status', 0);
+    }
+
+    /**
+     * Scopes a query to only include tasks that are done.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeDone($query)
+    {
+        return $query->where('status', 1);
+    }
+
+    /**
+     * Scopes a query to only include tasks that are complete.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeComplete($query)
+    {
+        return $query->where('status', 2);
+    }
 }
