@@ -11,6 +11,12 @@
 |
 */
 
+use App\Task;
+
+
 Route::get('/', function () {
-    return view('welcome');
+
+    $tasks = Task::all();
+
+    return view('index', compact('tasks'));
 });
