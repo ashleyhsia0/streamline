@@ -13,10 +13,8 @@
 
 use App\Task;
 
-
-Route::get('/', function () {
-
-    $tasks = Task::all();
-
-    return view('index', compact('tasks'));
+Route::get('/', function() {
+    return redirect()->action('TasksController@index');
 });
+
+Route::resource('tasks', 'TasksController');
