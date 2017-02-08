@@ -1,5 +1,8 @@
 @extends('layouts.base')
 
+@section('stylesheets')
+@endsection
+
 @section('content')
   <h1>Tasks</h1>
 
@@ -34,4 +37,7 @@
       @endforeach
     </tbody>
   </table>
+@endsection
+
+@section('scripts')
 @endsection
