@@ -2,7 +2,7 @@
 
 @section('content')
   <h1>Tasks</h1>
-  
+
   <table class="table">
     <thead class="thead-inverse">
       <tr>
@@ -19,7 +19,15 @@
         <tr>
           <td>{{ $task->id }}</td>
           <td>{{ $task->title }}</td>
-          <td>{{ $task->status }}</td>
+          <td>
+            @if ($task->status == 0)
+              IN PROGRESS
+            @elseif ($task->status == 1)
+              DONE
+            @else
+              COMPLETED
+            @endif
+          </td>
           <td>{{ $task->parent_id }}</td>
           <td></td>
         </tr>
