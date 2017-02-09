@@ -12115,16 +12115,12 @@ module.exports = function spread(callback) {
         },
 
         toggleCheck: function toggleCheck(taskId, index) {
-            console.log(taskId);
-            console.log(index);
-
             var task = this.tasks[index];
+            var self = this;
 
-            if (task['status'] === 0) {
-                this.$set(task, 'status', 1);
-            } else if (task['status'] === 1) {
-                this.$set(task, 'status', 0);
-            }
+            $.post('api/tasks/' + taskId).then(function (response) {
+                self.$set(task, 'status', response.status);
+            });
         }
     },
 
@@ -31756,8 +31752,8 @@ module.exports = function normalizeComponent (
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('table', {
     staticClass: "table"
-  }, [_vm._m(0), _vm._v("\n" + _vm._s(_vm.tasks) + "\n        "), _c('tbody', _vm._l((_vm.tasks), function(task, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.tasks), function(task, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                IN PROGRESS\n            ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                DONE\n            ")]) : _c('td', [_vm._v("\n                COMPLETED\n            ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "form-check form-check-inline"
     }, [_c('label', {
       staticClass: "form-check-label"

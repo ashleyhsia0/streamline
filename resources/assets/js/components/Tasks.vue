@@ -9,7 +9,7 @@
                 <th></th>
             </tr>
         </thead>
-{{tasks}}
+
         <tbody>
             <tr v-for="(task, index) in tasks">
                 <td>{{ task.id }}</td>
@@ -50,23 +50,19 @@
 
         methods: {
             fetchTasks: function() {
-                var self = this;
+                let self = this;
                 $.get('api/tasks').then(function (response) {
                     self.tasks = response;
                 });
             },
 
             toggleCheck: function(taskId, index) {
-                console.log(taskId);
-                console.log(index);
-
                 let task = this.tasks[index];
+                let self = this;
 
-                if (task['status'] === 0) {
-                    this.$set(task, 'status', 1);
-                } else if (task['status'] === 1) {
-                    this.$set(task, 'status', 0);
-                }
+                $.post(`api/tasks/${taskId}`).then(function (response) {
+                    self.$set(task, 'status', response.status);
+                });
             }
         },
 

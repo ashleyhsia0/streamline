@@ -73,6 +73,36 @@ class TasksController extends Controller
     }
 
     /**
+     * Update the status of a task.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus($id)
+    {
+        $task = Task::find($id);
+
+        if(!isset($task)) {
+            return response()->json(['message' => 'Task ID does not exist'], 404);
+        }
+
+        $status = $task->status;
+
+        if ($status == 0) {
+            $task->status = 1;
+        } elseif ($status == 1) {
+            $task->status = 0;
+        } else {
+            // TODO: Check dependencies to see if status can be updated to COMPLETED
+            // For now it just marks/unmarks as DONE
+        }
+
+        $task->save();
+
+        return $task;
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
