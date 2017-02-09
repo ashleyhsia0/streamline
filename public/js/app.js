@@ -12089,6 +12089,11 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12107,6 +12112,19 @@ module.exports = function spread(callback) {
             $.get('api/tasks').then(function (response) {
                 self.tasks = response;
             });
+        },
+
+        toggleCheck: function toggleCheck(taskId, index) {
+            console.log(taskId);
+            console.log(index);
+
+            var task = this.tasks[index];
+
+            if (task['status'] === 0) {
+                this.$set(task, 'status', 1);
+            } else if (task['status'] === 1) {
+                this.$set(task, 'status', 0);
+            }
         }
     },
 
@@ -31738,8 +31756,27 @@ module.exports = function normalizeComponent (
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('table', {
     staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.tasks), function(task) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                IN PROGRESS\n            ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                DONE\n            ")]) : _c('td', [_vm._v("\n                COMPLETED\n            ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td')])
+  }, [_vm._m(0), _vm._v("\n" + _vm._s(_vm.tasks) + "\n        "), _c('tbody', _vm._l((_vm.tasks), function(task, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
+      staticClass: "form-check form-check-inline"
+    }, [_c('label', {
+      staticClass: "form-check-label"
+    }, [_c('input', {
+      staticClass: "form-check-input",
+      attrs: {
+        "type": "checkbox",
+        "id": task.id
+      },
+      domProps: {
+        "value": task.id,
+        "checked": task.status === 1 || task.status === 2
+      },
+      on: {
+        "click": function($event) {
+          _vm.toggleCheck(task.id, index)
+        }
+      }
+    })])])])])
   }))])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', {
