@@ -8,15 +8,13 @@ use App\Task;
 class TasksController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Return a JSON of all tasks.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $tasks = Task::all();
-
-        return view('tasks.index', compact('tasks'));
+        return Task::all();
     }
 
     /**

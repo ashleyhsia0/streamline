@@ -14,5 +14,5 @@
 use App\Task;
 
 Route::get('/', function() {
-    return redirect()->action('TasksController@index');
+    return view('tasks.index');
 });
