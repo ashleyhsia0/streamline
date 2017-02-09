@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+
+    protected $fillable = ['title', 'parent_id'];
+
     /**
      * Indicates if the model should be timestamped.
      *
