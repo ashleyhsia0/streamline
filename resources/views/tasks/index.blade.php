@@ -4,6 +4,8 @@
 @endsection
 
 @section('content')
+    <example></example>
+
     <h1>Tasks</h1>
 
     <table class="table">
