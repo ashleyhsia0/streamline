@@ -12094,12 +12094,44 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
-            tasks: []
+            tasks: [],
+            visibility: 'all'
         };
+    },
+
+    computed: {
+        filteredTasks: function filteredTasks(taskView) {
+
+            switch (this.visibility) {
+                case 'inProgress':
+                    return this.tasks.filter(function (task) {
+                        return task.status === 0;
+                    });
+                case 'done':
+                    return this.tasks.filter(function (task) {
+                        return task.status === 1;
+                    });
+                case 'completed':
+                    return this.tasks.filter(function (task) {
+                        return task.status === 2;
+                    });
+                default:
+                    return this.tasks;
+            }
+        }
     },
 
     created: function created() {
@@ -31750,10 +31782,87 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
+  return _c('div', [_c('div', [_vm._v("\n        Filter Tasks by:\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "all",
+      "selected": ""
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "all")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "all"
+      }
+    }
+  }), _vm._v("All\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "inProgress"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "inProgress")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "inProgress"
+      }
+    }
+  }), _vm._v("In Progress\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "done"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "done")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "done"
+      }
+    }
+  }), _vm._v("Done\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "completed"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "completed")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "completed"
+      }
+    }
+  }), _vm._v("Completed\n    ")]), _vm._v(" "), _c('table', {
     staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.tasks), function(task, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                IN PROGRESS\n            ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                DONE\n            ")]) : _c('td', [_vm._v("\n                COMPLETED\n            ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "form-check form-check-inline"
     }, [_c('label', {
       staticClass: "form-check-label"
@@ -31773,7 +31882,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     })])])])])
-  }))])
+  }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', {
     staticClass: "thead-inverse"
