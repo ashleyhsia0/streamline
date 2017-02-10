@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Task;
+use Validator;
 
 class TasksController extends Controller
 {
@@ -28,14 +29,33 @@ class TasksController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a new task in the database.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'parent_id' => 'nullable|exists:tasks,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Parent Task ID does not exist'], 400);
+        }
+
+        $input_array = ['title' => $request->input('title')];
+
+        // Check if parent task ID is null or not
+        // If null, let database take care of it (defaults to 0)
+        if ($request->input('parent_id') !== null) {
+            $input_array['parent_id'] = $request->input('parent_id');
+        }
+
+        $task = Task::create($input_array);
+
+        return $task;
     }
 
     /**
