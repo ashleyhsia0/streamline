@@ -42,7 +42,7 @@ class TasksController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['message' => 'Parent Task ID does not exist'], 400);
+            return response()->json(['message' => 'Invalid input. Please try again.'], 400);
         }
 
         $input_array = ['title' => $request->input('title')];

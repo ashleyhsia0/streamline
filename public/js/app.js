@@ -12138,6 +12138,12 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12147,7 +12153,8 @@ module.exports = function spread(callback) {
             newTask: {
                 'title': '',
                 'parentId': ''
-            }
+            },
+            newTaskError: ''
         };
     },
 
@@ -12198,6 +12205,9 @@ module.exports = function spread(callback) {
                 };
 
                 $('#newTaskModal').modal('hide');
+            }).fail(function (response) {
+                var error = JSON.parse(response.responseText);
+                self.newTaskError = error.message;
             });
         },
 
@@ -31938,7 +31948,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "modal-content"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "modal-body"
-  }, [_c('div', {
+  }, [(_vm.newTaskError) ? _c('div', {
+    staticClass: "alert alert-danger alert-dismissible fade in",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_vm._m(1), _vm._v("\n                        " + _vm._s(_vm.newTaskError) + "\n                    ")]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "control-label",
@@ -32017,7 +32032,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('table', {
     staticClass: "table"
-  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
+  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "form-check form-check-inline"
     }, [_c('label', {
@@ -32059,6 +32074,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "myModalLabel"
     }
   }, [_vm._v("New Task")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', {
     staticClass: "thead-inverse"

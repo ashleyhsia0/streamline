@@ -22,6 +22,12 @@
                         <h4 class="modal-title" id="myModalLabel">New Task</h4>
                     </div>
                     <div class="modal-body">
+                        <div class="alert alert-danger alert-dismissible fade in" role="alert" v-if="newTaskError">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                            {{ newTaskError }}
+                        </div>
                         <div class="form-group">
                             <label for="title" class="control-label">Task Title:</label>
                             <input type="text" class="form-control" v-model="newTask.title">
@@ -89,7 +95,8 @@
                 newTask: {
                     'title': '',
                     'parentId': ''
-                }
+                },
+                newTaskError: '',
             };
         },
 
@@ -134,9 +141,13 @@
                         'title': '',
                         'parentId': ''
                     };
-                    
+
                     $('#newTaskModal').modal('hide')
-                });
+                })
+                 .fail(function(response) {
+                    let error = JSON.parse(response.responseText);
+                    self.newTaskError = error.message;
+                 });
             },
 
             toggleCheck: function(taskId, index) {
