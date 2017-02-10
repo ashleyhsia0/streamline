@@ -24,7 +24,7 @@
                     <div class="modal-body">
                         <div class="alert alert-danger alert-dismissible fade in" role="alert" v-if="newTaskError">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true">&times;</span>
                             </button>
                             {{ newTaskError }}
                         </div>
@@ -59,10 +59,18 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr v-for="(task, index) in filteredTasks">
+            <tbody v-for="(task, index) in filteredTasks">
+                <tr>
                     <td>{{ task.id }}</td>
-                    <td>{{ task.title }}</td>
+                    <td>
+                        {{ task.title }}
+                        <br>
+                        <span v-if="task.descendants.length > 0">
+                            <span class="label label-default">{{ task.descendants.length }} Dependencies</span>
+                            <span class="label label-primary">{{ getTasksByStatus(task.descendants, status.done).length }} Done</span>
+                            <span class="label label-success">{{ getTasksByStatus(task.descendants, status.completed).length }} Completed</span>
+                        </span>
+                    </td>
                     <td v-if="task.status == 0">
                         IN PROGRESS
                     </td>
@@ -76,8 +84,8 @@
                     <td>
                         <div class="form-check form-check-inline">
                             <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" :id="task.id" :value="task.id" @click="toggleCheck(task.id, index)" :checked="task.status === 1 || task.status === 2">
-                                </label>
+                                <input class="form-check-input" type="checkbox" :id="task.id" :value="task.id" @click="toggleCheck(task.id, index)" :checked="task.status === 1 || task.status === 2">
+                            </label>
                         </div>
                     </td>
                 </tr>
@@ -97,6 +105,11 @@
                     'parentId': ''
                 },
                 newTaskError: '',
+                status: {
+                    'inProgress': 0,
+                    'done': 1,
+                    'completed': 2
+                }
             };
         },
 
@@ -104,11 +117,11 @@
             filteredTasks: function() {
                 switch (this.visibility) {
                     case 'inProgress':
-                        return this.tasks.filter(task => task.status === 0);
+                        return this.getTasksByStatus(this.tasks, this.status.inProgress);
                     case 'done':
-                        return this.tasks.filter(task => task.status === 1);
+                        return this.getTasksByStatus(this.tasks, this.status.done);
                     case 'completed':
-                        return this.tasks.filter(task => task.status === 2);
+                        return this.getTasksByStatus(this.tasks, this.status.completed);
                     default:
                         return this.tasks;
                 }
@@ -148,6 +161,10 @@
                     let error = JSON.parse(response.responseText);
                     self.newTaskError = error.message;
                  });
+            },
+
+            getTasksByStatus: function(tasks, statusCode) {
+                return tasks.filter(task => task.status == statusCode);
             },
 
             toggleCheck: function(taskId, index) {

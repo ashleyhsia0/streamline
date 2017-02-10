@@ -12144,6 +12144,14 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
@@ -12154,7 +12162,12 @@ module.exports = function spread(callback) {
                 'title': '',
                 'parentId': ''
             },
-            newTaskError: ''
+            newTaskError: '',
+            status: {
+                'inProgress': 0,
+                'done': 1,
+                'completed': 2
+            }
         };
     },
 
@@ -12162,17 +12175,11 @@ module.exports = function spread(callback) {
         filteredTasks: function filteredTasks() {
             switch (this.visibility) {
                 case 'inProgress':
-                    return this.tasks.filter(function (task) {
-                        return task.status === 0;
-                    });
+                    return this.getTasksByStatus(this.tasks, this.status.inProgress);
                 case 'done':
-                    return this.tasks.filter(function (task) {
-                        return task.status === 1;
-                    });
+                    return this.getTasksByStatus(this.tasks, this.status.done);
                 case 'completed':
-                    return this.tasks.filter(function (task) {
-                        return task.status === 2;
-                    });
+                    return this.getTasksByStatus(this.tasks, this.status.completed);
                 default:
                     return this.tasks;
             }
@@ -12208,6 +12215,12 @@ module.exports = function spread(callback) {
             }).fail(function (response) {
                 var error = JSON.parse(response.responseText);
                 self.newTaskError = error.message;
+            });
+        },
+
+        getTasksByStatus: function getTasksByStatus(tasks, statusCode) {
+            return tasks.filter(function (task) {
+                return task.status == statusCode;
             });
         },
 
@@ -32032,8 +32045,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('table', {
     staticClass: "table"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
+  }, [_vm._m(2), _vm._v(" "), _vm._l((_vm.filteredTasks), function(task, index) {
+    return _c('tbody', [_c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v("\n                    " + _vm._s(task.title) + "\n                    "), _c('br'), _vm._v(" "), (task.descendants.length > 0) ? _c('span', [_c('span', {
+      staticClass: "label label-default"
+    }, [_vm._v(_vm._s(task.descendants.length) + " Dependencies")]), _vm._v(" "), _c('span', {
+      staticClass: "label label-primary"
+    }, [_vm._v(_vm._s(_vm.getTasksByStatus(task.descendants, _vm.status.done).length) + " Done")]), _vm._v(" "), _c('span', {
+      staticClass: "label label-success"
+    }, [_vm._v(_vm._s(_vm.getTasksByStatus(task.descendants, _vm.status.completed).length) + " Completed")])]) : _vm._e()]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "form-check form-check-inline"
     }, [_c('label', {
       staticClass: "form-check-label"
@@ -32052,8 +32071,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.toggleCheck(task.id, index)
         }
       }
-    })])])])])
-  }))])])
+    })])])])])])
+  })], 2)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"

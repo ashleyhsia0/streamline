@@ -15,7 +15,15 @@ class TasksController extends Controller
      */
     public function index()
     {
-        return Task::all();
+        $tasks = Task::all();
+        $tasksWithDecendants = [];
+
+        foreach ($tasks as $task) {
+            $task['descendants'] = $task->descendants()->get();
+            array_push($tasksWithDecendants, $task);
+        }
+
+        return $tasksWithDecendants;
     }
 
     /**
