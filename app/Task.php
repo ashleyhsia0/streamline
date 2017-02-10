@@ -19,35 +19,34 @@ class Task extends Model
     public $timestamps = false;
 
     /**
-     * Scopes a query to only include tasks that are in progress.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the children for the task.
      */
-    public function scopeInProgress($query)
+    public function children()
     {
-        return $query->where('status', 0);
+        return $this->hasMany('App\Task', 'parent_id');
     }
 
     /**
-     * Scopes a query to only include tasks that are done.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get all descendants for the task.
      */
-    public function scopeDone($query)
+    public function descendants()
     {
-        return $query->where('status', 1);
+        return $this->children()->with('descendants');
     }
 
     /**
-     * Scopes a query to only include tasks that are complete.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return \Illuminate\Database\Eloquent\Builder
+     * Get the parent for the task.
      */
-    public function scopeComplete($query)
+    public function parent()
     {
-        return $query->where('status', 2);
+        return $this->belongsTo('App\Task', 'parent_id');
+    }
+
+    /**
+     * Get all ascendants for the task.
+     */
+    public function ascendants()
+    {
+        return $this->parent()->with('ascendants');
     }
 }
