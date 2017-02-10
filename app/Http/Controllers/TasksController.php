@@ -55,6 +55,9 @@ class TasksController extends Controller
 
         $task = Task::create($input_array);
 
+        // Obtain record to get all attributes
+        $task = Task::find($task->id);
+
         return $task;
     }
 

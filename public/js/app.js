@@ -12103,18 +12103,56 @@ module.exports = function spread(callback) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     data: function data() {
         return {
             tasks: [],
-            visibility: 'all'
+            visibility: 'all',
+            newTask: {
+                'title': '',
+                'parentId': ''
+            }
         };
     },
 
     computed: {
-        filteredTasks: function filteredTasks(taskView) {
-
+        filteredTasks: function filteredTasks() {
             switch (this.visibility) {
                 case 'inProgress':
                     return this.tasks.filter(function (task) {
@@ -12141,8 +12179,25 @@ module.exports = function spread(callback) {
     methods: {
         fetchTasks: function fetchTasks() {
             var self = this;
+
             $.get('api/tasks').then(function (response) {
                 self.tasks = response;
+            });
+        },
+
+        createNewTask: function createNewTask() {
+            var task = this.newTask;
+            var self = this;
+
+            $.post('api/tasks', task).then(function (response) {
+                self.tasks.push(response);
+
+                self.newTask = {
+                    'title': '',
+                    'parentId': ''
+                };
+
+                $('#newTaskModal').modal('hide');
             });
         },
 
@@ -31859,9 +31914,110 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.visibility = "completed"
       }
     }
-  }), _vm._v("Completed\n    ")]), _vm._v(" "), _c('table', {
+  }), _vm._v("Completed\n    ")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button",
+      "data-toggle": "modal",
+      "data-target": "#newTaskModal"
+    }
+  }, [_vm._v("\n        New Task\n    ")]), _vm._v(" "), _c('div', {
+    staticClass: "modal fade",
+    attrs: {
+      "id": "newTaskModal",
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "newTaskModalLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "title"
+    }
+  }, [_vm._v("Task Title:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.newTask.title),
+      expression: "newTask.title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": _vm._s(_vm.newTask.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.newTask.title = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "parent-id"
+    }
+  }, [_vm._v("Parent Task ID:")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: (_vm.newTask.parentId),
+      expression: "newTask.parentId",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        _vm.newTask.parentId = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Optional")]), _vm._v(" "), _vm._l((_vm.tasks), function(task) {
+    return _c('option', [_vm._v(_vm._s(task.id))])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.createNewTask
+    }
+  }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('table', {
     staticClass: "table"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
+  }, [_vm._m(1), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.title))]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
       staticClass: "form-check form-check-inline"
     }, [_c('label', {
@@ -31884,6 +32040,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })])])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _c('h4', {
+    staticClass: "modal-title",
+    attrs: {
+      "id": "myModalLabel"
+    }
+  }, [_vm._v("New Task")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', {
     staticClass: "thead-inverse"
   }, [_c('tr', [_c('th', [_vm._v("Task ID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Status")]), _vm._v(" "), _c('th', [_vm._v("Parent Task")]), _vm._v(" "), _c('th')])])
