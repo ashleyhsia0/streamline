@@ -119,13 +119,28 @@ class TasksController extends Controller
 
         $status = $task->status;
 
-        if ($status == 0) {
+        if ($status === 0) {
             $task->status = 1;
-        } elseif ($status == 1) {
+
+            // Task is considered complete if it has no dependencies
+            // or if all of its dependencies have a COMPLETED status
+            $isTaskComplete = false;
+            $dependencies = $task->children()->get();
+
+            if ($dependencies->isEmpty()) {
+                $isTaskComplete = true;
+            }
+
+            foreach ($dependencies as $dependency) {
+                $isTaskComplete = ($dependency->status === 2) ? true : false;
+            }
+
+            if ($isTaskComplete) {
+                $task->status = 2;
+            }
+
+        } elseif ($status === 1) {
             $task->status = 0;
-        } else {
-            // TODO: Check dependencies to see if status can be updated to COMPLETED
-            // For now it just marks/unmarks as DONE
         }
 
         $task->save();
