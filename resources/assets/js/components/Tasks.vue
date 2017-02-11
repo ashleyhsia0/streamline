@@ -174,6 +174,7 @@
                 $.post(`api/tasks/${taskId}`)
                  .then(function(response) {
                     self.$set(task, 'status', response.status);
+                    self.fetchTasks();
                 });
             }
         },

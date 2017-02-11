@@ -118,6 +118,7 @@ class TasksController extends Controller
         }
 
         $status = $task->status;
+        $dependencies = $task->children()->get();
 
         if ($status === 0) {
             $task->status = 1;
@@ -125,12 +126,13 @@ class TasksController extends Controller
             // Task is considered complete if it has no dependencies
             // or if all of its dependencies have a COMPLETED status
             $isTaskComplete = false;
-            $dependencies = $task->children()->get();
 
             if ($dependencies->isEmpty()) {
                 $isTaskComplete = true;
             }
 
+            // TODO: Need to fix this b/c variable will be set to true/false depending
+            // on order of tasks
             foreach ($dependencies as $dependency) {
                 $isTaskComplete = ($dependency->status === 2) ? true : false;
             }
@@ -141,6 +143,13 @@ class TasksController extends Controller
 
         } elseif ($status === 1) {
             $task->status = 0;
+
+        // Task that has COMPLETE status can be IN PROGRESS if it has no dependencies
+        // (it is not a parent task)
+        } else {
+            if ($dependencies->isEmpty()) {
+                $task->status = 0;
+            }
         }
 
         $task->save();
