@@ -15,6 +15,9 @@ require('./bootstrap');
 
 Vue.component('tasks', require('./components/Tasks.vue'));
 
+Vue.component('taskslist', require('./components/TasksList.vue'));
+Vue.component('task', require('./components/Task.vue'));
+
 const app = new Vue({
     el: '#app'
 });

@@ -10,7 +10,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTaskModal">
-            New Task
+          New Task
         </button>
 
         <!-- Modal -->
@@ -48,49 +48,9 @@
             </div>
         </div>
 
-        <table class="table">
-            <thead class="thead-inverse">
-                <tr>
-                    <th>Task ID</th>
-                    <th>Title</th>
-                    <th>Status</th>
-                    <th>Parent Task</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <tr v-for="(task, index) in filteredTasks">
-                    <td>{{ task.id }}</td>
-                    <td>
-                        {{ task.title }}
-                        <br>
-                        <span v-if="task.descendants.length > 0">
-                            <span class="label label-default">{{ task.descendants.length }} Dependencies</span>
-                            <span class="label label-primary">{{ getTasksByStatus(task.descendants, status.done).length }} Done</span>
-                            <span class="label label-success">{{ getTasksByStatus(task.descendants, status.completed).length }} Completed</span>
-                        </span>
-                    </td>
-                    <td v-if="task.status == 0">
-                        IN PROGRESS
-                    </td>
-                    <td v-else-if="task.status == 1">
-                        DONE
-                    </td>
-                    <td v-else>
-                        COMPLETED
-                    </td>
-                    <td>{{ task.parent_id }}</td>
-                    <td>
-                        <div class="form-check form-check-inline">
-                            <label class="form-check-label">
-                                <input class="form-check-input" type="checkbox" :id="task.id" :value="task.id" @click="toggleCheck(task.id, index)" :checked="task.status === 1 || task.status === 2">
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <ul v-cloak>
+            <task v-for="(task, index) in filteredTasks" :task="task" :key="task.id" :index="index" :toggleCheck="toggleCheck" :getTasksByStatus="getTasksByStatus" :status="status"></task>
+        </ul>
     </div>
 </template>
 
@@ -148,7 +108,8 @@
 
                 $.post('api/tasks', task)
                  .then(function(response) {
-                    self.tasks.push(response);
+                    // self.tasks.push(response);
+                    self.fetchTasks();
 
                     self.newTask = {
                         'title': '',

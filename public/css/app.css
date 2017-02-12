@@ -8316,3 +8316,15 @@ button.close {
     display: none !important;
   }
 }
+
+[v-cloak] {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.dep-label {
+  padding-left: 20px;
+}

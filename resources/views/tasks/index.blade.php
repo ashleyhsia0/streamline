@@ -6,7 +6,9 @@
 @section('content')
     <h1>Tasks</h1>
 
-    <tasks></tasks>
+    {{-- <tasks></tasks> --}}
+
+    <taskslist></taskslist>
 
 @endsection
 
