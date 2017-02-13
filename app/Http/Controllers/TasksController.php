@@ -46,7 +46,7 @@ class TasksController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|max:255',
-            'parent_id' => 'nullable|exists:tasks,id',
+            'parentId' => 'nullable|exists:tasks,id',
         ]);
 
         if ($validator->fails()) {
@@ -57,8 +57,8 @@ class TasksController extends Controller
 
         // Check if parent task ID is null or not
         // If null, let database take care of it (defaults to 0)
-        if ($request->input('parent_id') !== null) {
-            $input_array['parent_id'] = $request->input('parent_id');
+        if ($request->input('parentId') !== null) {
+            $input_array['parent_id'] = $request->input('parentId');
         }
 
         $task = Task::create($input_array);
