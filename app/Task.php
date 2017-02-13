@@ -49,4 +49,23 @@ class Task extends Model
     {
         return $this->parent()->with('ascendants');
     }
+
+    /**
+     * Check if a task is considered COMPLETE.
+     *
+     * A task is considered COMPLETE if it has no dependencies or if all of its
+     * dependencies have a COMPLETED status.
+     */
+    public function isComplete()
+    {
+        $dependencies = $this->children()->get();
+
+        foreach ($dependencies as $dependency) {
+            if ($dependency->status !== 2) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

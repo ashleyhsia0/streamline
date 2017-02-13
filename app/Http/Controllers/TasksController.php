@@ -113,7 +113,7 @@ class TasksController extends Controller
     {
         $task = Task::find($id);
 
-        if(!isset($task)) {
+        if (!isset($task)) {
             return response()->json(['message' => 'Task ID does not exist'], 404);
         }
 
@@ -123,21 +123,7 @@ class TasksController extends Controller
         if ($status === 0) {
             $task->status = 1;
 
-            // Task is considered complete if it has no dependencies
-            // or if all of its dependencies have a COMPLETED status
-            $isTaskComplete = false;
-
-            if ($dependencies->isEmpty()) {
-                $isTaskComplete = true;
-            }
-
-            // TODO: Need to fix this b/c variable will be set to true/false depending
-            // on order of tasks
-            foreach ($dependencies as $dependency) {
-                $isTaskComplete = ($dependency->status === 2) ? true : false;
-            }
-
-            if ($isTaskComplete) {
+            if ($task->isComplete()) {
                 $task->status = 2;
             }
 
