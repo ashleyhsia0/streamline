@@ -82,12 +82,37 @@ class Task extends Model
         $this->status = 2;
         $this->save();
 
-        // Base Case #2: If we have reached the root parent (no more to check)
         $parent = $this->parent()->first();
+
+        // Base Case #2: If we have reached the root parent (no more to check)
         if (!$parent) {
             return;
         }
 
         $parent->mark();
+    }
+
+    /**
+     * Unmark the status to IN PROGRESS/DONE, propogating the status change upwards.
+     *
+     * A task can be IN PROGRESS if it has no dependencies (if it is not a parent task).
+     * A parent task must not revert to IN PROGRESS from DONE or COMPLETE.
+     */
+    public function unmark()
+    {
+        $dependencies = $this->children()->get();
+
+        if ($dependencies->isEmpty()) {
+            $this->status = 0;
+            $this->save();
+
+            $parent = $this->parent()->first();
+
+            while ($parent) {
+                $parent->status = 1;
+                $parent->save();
+                $parent = $parent->parent()->first();
+            }
+        }
     }
 }

@@ -118,25 +118,12 @@ class TasksController extends Controller
         }
 
         $status = $task->status;
-        $dependencies = $task->children()->get();
 
         if ($status === 0) {
             $task->status = 1;
             $task->mark();
-
-        // Task that has COMPLETE status can be IN PROGRESS if it has no dependencies (it is not a parent task)
-        // A parent task must not revert to IN PROGRESS from DONE or COMPLETE.
         } else {
-            if ($dependencies->isEmpty()) {
-                $task->status = 0;
-
-                $parent = $task->parent()->first();
-                if ($parent) {
-                    $parent->status = 1;
-                    $parent->save();
-                }
-            }
-
+            $task->unmark();
             // TODO: Return a response to user that says status of parent task cannot be modified.
         }
 
