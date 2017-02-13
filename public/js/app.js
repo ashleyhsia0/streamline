@@ -41072,6 +41072,8 @@ if (false) {
             $.post('api/tasks/' + taskId).then(function (response) {
                 self.$set(task, 'status', response.status);
                 self.fetchTasks();
+            }).fail(function (response) {
+                console.log(response);
             });
         }
     },

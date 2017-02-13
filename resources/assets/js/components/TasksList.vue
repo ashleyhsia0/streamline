@@ -143,6 +143,9 @@
                  .then(function(response) {
                     self.$set(task, 'status', response.status);
                     self.fetchTasks();
+                })
+                 .fail(function(response) {
+                    console.log(response);
                 });
             }
         },
