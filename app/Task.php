@@ -68,4 +68,26 @@ class Task extends Model
 
         return true;
     }
+
+    /**
+     * Mark the status as COMPLETE and traverse upwards, propagating the status change.
+     */
+    public function mark()
+    {
+        // Base Case #1: If the task is incomplete after checking its dependencies
+        if (!$this->isComplete()) {
+            return;
+        }
+
+        $this->status = 2;
+        $this->save();
+
+        // Base Case #2: If we have reached the root parent (no more to check)
+        $parent = $this->parent()->first();
+        if (!$parent) {
+            return;
+        }
+
+        $parent->mark();
+    }
 }

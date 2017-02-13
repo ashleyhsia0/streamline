@@ -122,10 +122,7 @@ class TasksController extends Controller
 
         if ($status === 0) {
             $task->status = 1;
-
-            if ($task->isComplete()) {
-                $task->status = 2;
-            }
+            $task->mark();
 
         // Task that has COMPLETE status can be IN PROGRESS if it has no dependencies (it is not a parent task)
         // A parent task must not revert to IN PROGRESS from DONE or COMPLETE.
