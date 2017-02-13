@@ -40783,6 +40783,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: {
@@ -40858,7 +40873,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('label', [_c('input', {
     attrs: {
       "type": "checkbox",
-      "value": "",
       "id": _vm.task.id
     },
     domProps: {
@@ -40879,9 +40893,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "label label-default"
   }, [_vm._v("\n            ▼ " + _vm._s(_vm.task.descendants.length) + " Dependencies\n            "), _c('span', {
     staticClass: "label label-primary"
-  }, [_vm._v(_vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.done).length) + " Done")]), _vm._v(" "), _c('span', {
+  }, [_vm._v("\n                " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.done).length) + " Done\n            ")]), _vm._v(" "), _c('span', {
     staticClass: "label label-success"
-  }, [_vm._v(_vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.completed).length) + " Completed")])])]) : _vm._e(), _vm._v(" "), (_vm.isParent) ? _c('ul', {
+  }, [_vm._v("\n                " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.completed).length) + " Completed\n            ")])])]) : _vm._e(), _vm._v(" "), (_vm.isParent) ? _c('ul', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -40915,6 +40929,13 @@ if (false) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -41216,9 +41237,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Task Title:")]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
-      rawName: "v-model",
+      rawName: "v-model.trim",
       value: (_vm.newTask.title),
-      expression: "newTask.title"
+      expression: "newTask.title",
+      modifiers: {
+        "trim": true
+      }
     }],
     staticClass: "form-control",
     attrs: {
@@ -41230,7 +41254,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.newTask.title = $event.target.value
+        _vm.newTask.title = $event.target.value.trim()
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -41243,12 +41270,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Parent Task ID:")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
-      rawName: "v-model.trim",
+      rawName: "v-model",
       value: (_vm.newTask.parentId),
-      expression: "newTask.parentId",
-      modifiers: {
-        "trim": true
-      }
+      expression: "newTask.parentId"
     }],
     staticClass: "form-control",
     on: {

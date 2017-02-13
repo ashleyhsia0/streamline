@@ -30,11 +30,11 @@
                         </div>
                         <div class="form-group">
                             <label for="title" class="control-label">Task Title:</label>
-                            <input type="text" class="form-control" v-model="newTask.title">
+                            <input type="text" class="form-control" v-model.trim="newTask.title">
                         </div>
                         <div class="form-group">
                             <label for="parent-id" class="control-label">Parent Task ID:</label>
-                            <select class="form-control" v-model.trim="newTask.parentId">
+                            <select class="form-control" v-model="newTask.parentId">
                                 <option value="">Optional</option>
                                 <option v-for="task in tasks">{{ task.id }}</option>
                             </select>
@@ -49,7 +49,14 @@
         </div>
 
         <ul v-cloak>
-            <task v-for="(task, index) in filteredTasks" :task="task" :key="task.id" :index="index" :toggleCheck="toggleCheck" :getTasksByStatus="getTasksByStatus" :status="status"></task>
+            <task v-for="(task, index) in filteredTasks"
+                  :task="task"
+                  :key="task.id"
+                  :index="index"
+                  :toggleCheck="toggleCheck"
+                  :getTasksByStatus="getTasksByStatus"
+                  :status="status">
+            </task>
         </ul>
     </div>
 </template>
