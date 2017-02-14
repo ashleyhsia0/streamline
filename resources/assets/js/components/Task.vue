@@ -21,10 +21,10 @@
 
                     <div v-if="task.descendants.length > 0" @click="collapse">
                         <span v-if="open">
-                            &#9660;
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </span>
                         <span v-else>
-                            &#9654;
+                            <i class="fa fa-caret-right" aria-hidden="true"></i>
                         </span>
                         <span class="label label-default">
                             {{ task.descendants.length }} Dependencies

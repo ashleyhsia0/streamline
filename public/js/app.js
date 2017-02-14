@@ -40432,7 +40432,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.collapse
     }
-  }, [(_vm.open) ? _c('span', [_vm._v("\n                        ▼\n                    ")]) : _c('span', [_vm._v("\n                        ▶\n                    ")]), _vm._v(" "), _c('span', {
+  }, [(_vm.open) ? _c('span', [_c('i', {
+    staticClass: "fa fa-caret-down",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]) : _c('span', [_c('i', {
+    staticClass: "fa fa-caret-right",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })]), _vm._v(" "), _c('span', {
     staticClass: "label label-default"
   }, [_vm._v("\n                        " + _vm._s(_vm.task.descendants.length) + " Dependencies\n                    ")]), _vm._v(" "), _c('span', {
     staticClass: "label label-primary"
@@ -40480,6 +40490,7 @@ if (false) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -40678,15 +40689,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "wrapper"
-  }, [_c('h1', [_vm._v("Tasks")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "type": "button",
-      "id": "btn-new-task",
-      "data-toggle": "modal",
-      "data-target": "#newTaskModal"
-    }
-  }, [_vm._v("\n      New Task\n    ")]), _vm._v(" "), _c('div', {
+  }, [_c('h1', [_vm._v("Tasks")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
       "id": "newTaskModal",
@@ -40701,14 +40704,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
+  }, [_vm._m(1), _vm._v(" "), _c('div', {
     staticClass: "modal-body"
   }, [(_vm.newTaskError) ? _c('div', {
     staticClass: "alert alert-danger alert-dismissible fade in",
     attrs: {
       "role": "alert"
     }
-  }, [_vm._m(1), _vm._v("\n                        " + _vm._s(_vm.newTaskError) + "\n                    ")]) : _vm._e(), _vm._v(" "), _c('div', {
+  }, [_vm._m(2), _vm._v("\n                        " + _vm._s(_vm.newTaskError) + "\n                    ")]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     staticClass: "control-label",
@@ -40882,6 +40885,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     })
   }))])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button",
+      "id": "btn-new-task",
+      "data-toggle": "modal",
+      "data-target": "#newTaskModal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-plus-circle",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }), _vm._v("\n      New Task\n    ")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
   }, [_c('button', {

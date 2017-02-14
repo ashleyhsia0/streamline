@@ -4,6 +4,7 @@
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" id="btn-new-task" data-toggle="modal" data-target="#newTaskModal">
+          <i class="fa fa-plus-circle" aria-hidden="true"></i>
           New Task
         </button>
 
