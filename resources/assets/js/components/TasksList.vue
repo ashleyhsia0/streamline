@@ -1,15 +1,9 @@
 <template>
-    <div>
-        <div>
-            Filter Tasks by:
-            <input type="radio" v-model="visibility" value="all" selected>All
-            <input type="radio" v-model="visibility" value="inProgress">In Progress
-            <input type="radio" v-model="visibility" value="done">Done
-            <input type="radio" v-model="visibility" value="completed">Completed
-        </div>
+    <div class="wrapper">
+        <h1>Tasks</h1>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newTaskModal">
+        <button type="button" class="btn btn-primary" id="btn-new-task" data-toggle="modal" data-target="#newTaskModal">
           New Task
         </button>
 
@@ -48,7 +42,15 @@
             </div>
         </div>
 
-        <ul v-cloak>
+        <div class="filters">
+            Filter Tasks by:
+            <input type="radio" v-model="visibility" value="all" selected> All
+            <input type="radio" v-model="visibility" value="inProgress"> In Progress
+            <input type="radio" v-model="visibility" value="done"> Done
+            <input type="radio" v-model="visibility" value="completed"> Completed
+        </div>
+
+        <ul v-cloak class="task-list">
             <task v-for="(task, index) in filteredTasks"
                   :task="task"
                   :key="task.id"

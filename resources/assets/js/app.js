@@ -13,8 +13,6 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('tasks', require('./components/Tasks.vue'));
-
 Vue.component('taskslist', require('./components/TasksList.vue'));
 Vue.component('task', require('./components/Task.vue'));
 

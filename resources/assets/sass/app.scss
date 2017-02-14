@@ -5,8 +5,88 @@
 // Variables
 @import "variables";
 
+// Mixins
+@mixin border-left($color) {
+  border-left: 3px solid $color;
+}
+
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+.wrapper {
+  position: relative;
+
+  h1 {
+    text-align: center;
+  }
+}
+
+#btn-new-task {
+  position: absolute;
+  right: 0;
+}
+
+.filters {
+  text-align: center;
+  padding: 10px;
+}
+
+.task-list {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
+
+.item {
+  display: flex;
+
+  input[type="checkbox"] {
+    margin: 10px;
+  }
+
+  .details {
+    flex: 1;
+    padding: 5px 10px;
+
+    p {
+      display: inline-block;
+      margin: 0 0 0 5px;
+    }
+
+    .relationships {
+      margin-top: 5px;
+    }
+  }
+
+  .details-danger {
+    @include border-left($danger);
+  }
+
+  .details-warning {
+    @include border-left($warning);
+  }
+
+  .details-success {
+    @include border-left($success);
+  }
+
+  .status {
+    margin-right: 10px;
+    text-transform: uppercase;
+    // font-weight: bold;
+
+    .in-progress {
+      color: $danger;
+    }
+
+    .done {
+      color: $warning;
+    }
+
+    .completed {
+      color: $success;
+    }
+  }
+}
 
 [v-cloak] {
   display: none;
@@ -14,8 +94,14 @@
 
 ul {
   list-style-type: none;
-}
+  padding-left: 0;
 
-.dep-label {
-  padding-left: 20px;
+  li {
+    border-bottom: 1px solid #dddddd;
+    padding: 10px;
+  }
+
+  li:last-child {
+    border-bottom: 0;
+  }
 }

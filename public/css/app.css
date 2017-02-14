@@ -8317,14 +8317,98 @@ button.close {
   }
 }
 
+.wrapper {
+  position: relative;
+}
+
+.wrapper h1 {
+  text-align: center;
+}
+
+#btn-new-task {
+  position: absolute;
+  right: 0;
+}
+
+.filters {
+  text-align: center;
+  padding: 10px;
+}
+
+.task-list {
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+}
+
+.item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.item input[type="checkbox"] {
+  margin: 10px;
+}
+
+.item .details {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 5px 10px;
+}
+
+.item .details p {
+  display: inline-block;
+  margin: 0 0 0 5px;
+}
+
+.item .details .relationships {
+  margin-top: 5px;
+}
+
+.item .details-danger {
+  border-left: 3px solid #d9534f;
+}
+
+.item .details-warning {
+  border-left: 3px solid #E7AF81;
+}
+
+.item .details-success {
+  border-left: 3px solid #5CB85C;
+}
+
+.item .status {
+  margin-right: 10px;
+  text-transform: uppercase;
+}
+
+.item .status .in-progress {
+  color: #d9534f;
+}
+
+.item .status .done {
+  color: #E7AF81;
+}
+
+.item .status .completed {
+  color: #5CB85C;
+}
+
 [v-cloak] {
   display: none;
 }
 
 ul {
   list-style-type: none;
+  padding-left: 0;
 }
 
-.dep-label {
-  padding-left: 20px;
+ul li {
+  border-bottom: 1px solid #dddddd;
+  padding: 10px;
+}
+
+ul li:last-child {
+  border-bottom: 0;
 }

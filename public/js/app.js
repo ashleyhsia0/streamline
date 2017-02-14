@@ -11197,8 +11197,6 @@ __webpack_require__(31);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('tasks', __webpack_require__(34));
-
 Vue.component('taskslist', __webpack_require__(52));
 Vue.component('task', __webpack_require__(49));
 
@@ -12054,197 +12052,7 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = {
-    data: function data() {
-        return {
-            tasks: [],
-            visibility: 'all',
-            newTask: {
-                'title': '',
-                'parentId': ''
-            },
-            newTaskError: '',
-            status: {
-                'inProgress': 0,
-                'done': 1,
-                'completed': 2
-            }
-        };
-    },
-
-    computed: {
-        filteredTasks: function filteredTasks() {
-            switch (this.visibility) {
-                case 'inProgress':
-                    return this.getTasksByStatus(this.tasks, this.status.inProgress);
-                case 'done':
-                    return this.getTasksByStatus(this.tasks, this.status.done);
-                case 'completed':
-                    return this.getTasksByStatus(this.tasks, this.status.completed);
-                default:
-                    return this.tasks;
-            }
-        }
-    },
-
-    created: function created() {
-        this.fetchTasks();
-    },
-
-    methods: {
-        fetchTasks: function fetchTasks() {
-            var self = this;
-
-            $.get('api/tasks').then(function (response) {
-                self.tasks = response;
-            });
-        },
-
-        createNewTask: function createNewTask() {
-            var task = this.newTask;
-            var self = this;
-
-            $.post('api/tasks', task).then(function (response) {
-                self.tasks.push(response);
-
-                self.newTask = {
-                    'title': '',
-                    'parentId': ''
-                };
-
-                $('#newTaskModal').modal('hide');
-            }).fail(function (response) {
-                var error = JSON.parse(response.responseText);
-                self.newTaskError = error.message;
-            });
-        },
-
-        getTasksByStatus: function getTasksByStatus(tasks, statusCode) {
-            return tasks.filter(function (task) {
-                return task.status == statusCode;
-            });
-        },
-
-        toggleCheck: function toggleCheck(taskId, index) {
-            var task = this.tasks[index];
-            var self = this;
-
-            $.post('api/tasks/' + taskId).then(function (response) {
-                self.$set(task, 'status', response.status);
-                self.fetchTasks();
-            });
-        }
-    },
-
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
-};
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
-
-/***/ }),
+/* 30 */,
 /* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -31773,40 +31581,7 @@ if (typeof jQuery === 'undefined') {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9), __webpack_require__(38)(module)))
 
 /***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(35)(
-  /* script */
-  __webpack_require__(30),
-  /* template */
-  __webpack_require__(36),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Users/ahsiao/Desktop/Programming/php/streamline/resources/assets/js/components/Tasks.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Tasks.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1de23376", Component.options)
-  } else {
-    hotAPI.reload("data-v-1de23376", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 34 */,
 /* 35 */
 /***/ (function(module, exports) {
 
@@ -31860,270 +31635,7 @@ module.exports = function normalizeComponent (
 
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', [_vm._v("\n        Filter Tasks by:\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "all",
-      "selected": ""
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "all")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "all"
-      }
-    }
-  }), _vm._v("All\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "inProgress"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "inProgress")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "inProgress"
-      }
-    }
-  }), _vm._v("In Progress\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "done"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "done")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "done"
-      }
-    }
-  }), _vm._v("Done\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "completed"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "completed")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "completed"
-      }
-    }
-  }), _vm._v("Completed\n    ")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "type": "button",
-      "data-toggle": "modal",
-      "data-target": "#newTaskModal"
-    }
-  }, [_vm._v("\n        New Task\n    ")]), _vm._v(" "), _c('div', {
-    staticClass: "modal fade",
-    attrs: {
-      "id": "newTaskModal",
-      "tabindex": "-1",
-      "role": "dialog",
-      "aria-labelledby": "newTaskModalLabel"
-    }
-  }, [_c('div', {
-    staticClass: "modal-dialog modal-sm",
-    attrs: {
-      "role": "document"
-    }
-  }, [_c('div', {
-    staticClass: "modal-content"
-  }, [_vm._m(0), _vm._v(" "), _c('div', {
-    staticClass: "modal-body"
-  }, [(_vm.newTaskError) ? _c('div', {
-    staticClass: "alert alert-danger alert-dismissible fade in",
-    attrs: {
-      "role": "alert"
-    }
-  }, [_vm._m(1), _vm._v("\n                        " + _vm._s(_vm.newTaskError) + "\n                    ")]) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "control-label",
-    attrs: {
-      "for": "title"
-    }
-  }, [_vm._v("Task Title:")]), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.newTask.title),
-      expression: "newTask.title"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    },
-    domProps: {
-      "value": _vm._s(_vm.newTask.title)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.newTask.title = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    staticClass: "control-label",
-    attrs: {
-      "for": "parent-id"
-    }
-  }, [_vm._v("Parent Task ID:")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model.trim",
-      value: (_vm.newTask.parentId),
-      expression: "newTask.parentId",
-      modifiers: {
-        "trim": true
-      }
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": function($event) {
-        _vm.newTask.parentId = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        })[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": ""
-    }
-  }, [_vm._v("Optional")]), _vm._v(" "), _vm._l((_vm.tasks), function(task) {
-    return _c('option', [_vm._v(_vm._s(task.id))])
-  })], 2)])]), _vm._v(" "), _c('div', {
-    staticClass: "modal-footer"
-  }, [_c('button', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "modal"
-    }
-  }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": _vm.createNewTask
-    }
-  }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('table', {
-    staticClass: "table"
-  }, [_vm._m(2), _vm._v(" "), _c('tbody', _vm._l((_vm.filteredTasks), function(task, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(task.id))]), _vm._v(" "), _c('td', [_vm._v("\n                    " + _vm._s(task.title) + "\n                    "), _c('br'), _vm._v(" "), (task.descendants.length > 0) ? _c('span', [_c('span', {
-      staticClass: "label label-default"
-    }, [_vm._v(_vm._s(task.descendants.length) + " Dependencies")]), _vm._v(" "), _c('span', {
-      staticClass: "label label-primary"
-    }, [_vm._v(_vm._s(_vm.getTasksByStatus(task.descendants, _vm.status.done).length) + " Done")]), _vm._v(" "), _c('span', {
-      staticClass: "label label-success"
-    }, [_vm._v(_vm._s(_vm.getTasksByStatus(task.descendants, _vm.status.completed).length) + " Completed")])]) : _vm._e()]), _vm._v(" "), (task.status == 0) ? _c('td', [_vm._v("\n                    IN PROGRESS\n                ")]) : (task.status == 1) ? _c('td', [_vm._v("\n                    DONE\n                ")]) : _c('td', [_vm._v("\n                    COMPLETED\n                ")]), _vm._v(" "), _c('td', [_vm._v(_vm._s(task.parent_id))]), _vm._v(" "), _c('td', [_c('div', {
-      staticClass: "form-check form-check-inline"
-    }, [_c('label', {
-      staticClass: "form-check-label"
-    }, [_c('input', {
-      staticClass: "form-check-input",
-      attrs: {
-        "type": "checkbox",
-        "id": task.id
-      },
-      domProps: {
-        "value": task.id,
-        "checked": task.status === 1 || task.status === 2
-      },
-      on: {
-        "click": function($event) {
-          _vm.toggleCheck(task.id, index)
-        }
-      }
-    })])])])])
-  }))])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "modal-header"
-  }, [_c('button', {
-    staticClass: "close",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "modal",
-      "aria-label": "Close"
-    }
-  }, [_c('span', {
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }, [_vm._v("×")])]), _vm._v(" "), _c('h4', {
-    staticClass: "modal-title",
-    attrs: {
-      "id": "myModalLabel"
-    }
-  }, [_vm._v("New Task")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('button', {
-    staticClass: "close",
-    attrs: {
-      "type": "button",
-      "data-dismiss": "alert",
-      "aria-label": "Close"
-    }
-  }, [_c('span', {
-    attrs: {
-      "aria-hidden": "true"
-    }
-  }, [_vm._v("×")])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', {
-    staticClass: "thead-inverse"
-  }, [_c('tr', [_c('th', [_vm._v("Task ID")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Status")]), _vm._v(" "), _c('th', [_vm._v("Parent Task")]), _vm._v(" "), _c('th')])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-1de23376", module.exports)
-  }
-}
-
-/***/ }),
+/* 36 */,
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40798,6 +40310,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: {
@@ -40817,6 +40347,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         isParent: function isParent() {
             return this.task.descendants && this.task.descendants.length;
+        },
+        classObject: function classObject() {
+            return {
+                'details-danger': this.task.status == 0,
+                'details-warning': this.task.status == 1,
+                'details-success': this.task.status == 2
+            };
         }
     },
 
@@ -40869,8 +40406,8 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', [_c('div', {
-    staticClass: "checkbox"
-  }, [_c('label', [_c('input', {
+    staticClass: "item"
+  }, [_c('input', {
     attrs: {
       "type": "checkbox",
       "id": _vm.task.id
@@ -40884,18 +40421,24 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.toggleCheck(_vm.task.id, _vm.index)
       }
     }
-  }), _vm._v("\n            ID#" + _vm._s(_vm.task.id) + "\n            " + _vm._s(_vm.task.title) + "\n        ")]), _vm._v(" "), (_vm.task.status == 0) ? _c('span', [_vm._v("\n            IN PROGRESS\n        ")]) : (_vm.task.status == 1) ? _c('span', [_vm._v("\n            DONE\n        ")]) : _c('span', [_vm._v("\n            COMPLETED\n        ")]), _vm._v("\n        PARENT ID#" + _vm._s(_vm.task.parent_id) + "\n    ")]), _vm._v(" "), (_vm.task.descendants.length > 0) ? _c('div', {
-    staticClass: "dep-label",
+  }), _vm._v(" "), _c('div', {
+    staticClass: "details",
+    class: _vm.classObject
+  }, [_c('span', {
+    staticClass: "label label-info"
+  }, [_vm._v("\n                ID#" + _vm._s(_vm.task.id) + "\n            ")]), _vm._v(" "), _c('p', [_vm._v("\n                " + _vm._s(_vm.task.title) + "\n            ")]), _vm._v(" "), _c('div', {
+    staticClass: "relationships"
+  }, [(_vm.task.descendants.length > 0) ? _c('div', {
     on: {
       "click": _vm.collapse
     }
-  }, [_c('span', {
+  }, [(_vm.open) ? _c('span', [_vm._v("\n                        ▼\n                    ")]) : _c('span', [_vm._v("\n                        ▶\n                    ")]), _vm._v(" "), _c('span', {
     staticClass: "label label-default"
-  }, [_vm._v("\n            ▼ " + _vm._s(_vm.task.descendants.length) + " Dependencies\n            "), _c('span', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.task.descendants.length) + " Dependencies\n                    ")]), _vm._v(" "), _c('span', {
     staticClass: "label label-primary"
-  }, [_vm._v("\n                " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.done).length) + " Done\n            ")]), _vm._v(" "), _c('span', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.done).length) + " Done\n                    ")]), _vm._v(" "), _c('span', {
     staticClass: "label label-success"
-  }, [_vm._v("\n                " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.completed).length) + " Completed\n            ")])])]) : _vm._e(), _vm._v(" "), (_vm.isParent) ? _c('ul', {
+  }, [_vm._v("\n                        " + _vm._s(_vm.getTasksByStatus(_vm.task.descendants, _vm.status.completed).length) + " Completed\n                    ")])]) : _vm._e(), _vm._v(" "), (_vm.isParent) ? _c('ul', {
     directives: [{
       name: "show",
       rawName: "v-show",
@@ -40913,7 +40456,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "status": _vm.status
       }
     })
-  })) : _vm._e()])
+  })) : _vm._e()])]), _vm._v(" "), _c('div', {
+    staticClass: "status"
+  }, [(_vm.task.status == 0) ? _c('span', {
+    staticClass: "in-progress"
+  }, [_vm._v("\n                In progress\n            ")]) : (_vm.task.status == 1) ? _c('span', {
+    staticClass: "done"
+  }, [_vm._v("\n                Done\n            ")]) : _c('span', {
+    staticClass: "completed"
+  }, [_vm._v("\n                Completed\n            ")])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -40929,6 +40480,8 @@ if (false) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -41123,87 +40676,13 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', [_vm._v("\n        Filter Tasks by:\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "all",
-      "selected": ""
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "all")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "all"
-      }
-    }
-  }), _vm._v("All\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "inProgress"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "inProgress")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "inProgress"
-      }
-    }
-  }), _vm._v("In Progress\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "done"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "done")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "done"
-      }
-    }
-  }), _vm._v("Done\n        "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.visibility),
-      expression: "visibility"
-    }],
-    attrs: {
-      "type": "radio",
-      "value": "completed"
-    },
-    domProps: {
-      "checked": _vm._q(_vm.visibility, "completed")
-    },
-    on: {
-      "click": function($event) {
-        _vm.visibility = "completed"
-      }
-    }
-  }), _vm._v("Completed\n    ")]), _vm._v(" "), _c('button', {
+  return _c('div', {
+    staticClass: "wrapper"
+  }, [_c('h1', [_vm._v("Tasks")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "button",
+      "id": "btn-new-task",
       "data-toggle": "modal",
       "data-target": "#newTaskModal"
     }
@@ -41309,7 +40788,88 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.createNewTask
     }
-  }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('ul', {}, _vm._l((_vm.filteredTasks), function(task, index) {
+  }, [_vm._v("Add")])])])])]), _vm._v(" "), _c('div', {
+    staticClass: "filters"
+  }, [_vm._v("\n        Filter Tasks by:\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "all",
+      "selected": ""
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "all")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "all"
+      }
+    }
+  }), _vm._v(" All\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "inProgress"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "inProgress")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "inProgress"
+      }
+    }
+  }), _vm._v(" In Progress\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "done"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "done")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "done"
+      }
+    }
+  }), _vm._v(" Done\n        "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.visibility),
+      expression: "visibility"
+    }],
+    attrs: {
+      "type": "radio",
+      "value": "completed"
+    },
+    domProps: {
+      "checked": _vm._q(_vm.visibility, "completed")
+    },
+    on: {
+      "click": function($event) {
+        _vm.visibility = "completed"
+      }
+    }
+  }), _vm._v(" Completed\n    ")]), _vm._v(" "), _c('ul', {
+    staticClass: "task-list"
+  }, _vm._l((_vm.filteredTasks), function(task, index) {
     return _c('task', {
       key: task.id,
       attrs: {
