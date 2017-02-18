@@ -11197,8 +11197,9 @@ __webpack_require__(31);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('taskslist', __webpack_require__(52));
+Vue.component('tasks-list', __webpack_require__(52));
 Vue.component('task', __webpack_require__(49));
+Vue.component('edit-task', __webpack_require__(55));
 
 var app = new Vue({
   el: '#app'
@@ -40328,6 +40329,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = {
     props: {
@@ -40474,7 +40482,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "done"
   }, [_vm._v("\n                Done\n            ")]) : _c('span', {
     staticClass: "completed"
-  }, [_vm._v("\n                Completed\n            ")])])])])
+  }, [_vm._v("\n                Completed\n            ")])]), _vm._v(" "), _c('div', {
+    staticClass: "edit-task"
+  }, [_c('a', {
+    attrs: {
+      "href": '#edit-task-modal-' + _vm.task.id,
+      "data-toggle": "modal"
+    }
+  }, [_c('i', {
+    staticClass: "fa fa-pencil-square-o fa-lg",
+    attrs: {
+      "aria-hidden": "true"
+    }
+  })])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -40490,6 +40510,11 @@ if (false) {
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40598,7 +40623,7 @@ if (false) {
         fetchTasks: function fetchTasks() {
             var self = this;
 
-            $.get('api/tasks').then(function (response) {
+            $.get('api/tasks').done(function (response) {
                 self.tasks = response;
             });
         },
@@ -40607,7 +40632,7 @@ if (false) {
             var task = this.newTask;
             var self = this;
 
-            $.post('api/tasks', task).then(function (response) {
+            $.post('api/tasks', task).done(function (response) {
                 // self.tasks.push(response);
                 self.fetchTasks();
 
@@ -40616,7 +40641,7 @@ if (false) {
                     'parentId': ''
                 };
 
-                $('#newTaskModal').modal('hide');
+                $('#new-task-modal').modal('hide');
             }).fail(function (response) {
                 var error = JSON.parse(response.responseText);
                 self.newTaskError = error.message;
@@ -40633,11 +40658,12 @@ if (false) {
             var task = this.tasks[index];
             var self = this;
 
-            $.post('api/tasks/' + taskId).then(function (response) {
+            $.post('api/tasks/' + taskId).done(function (response) {
                 self.$set(task, 'status', response.status);
                 self.fetchTasks();
             }).fail(function (response) {
                 console.log(response);
+                // TODO: Display error message to user
             });
         }
     },
@@ -40692,7 +40718,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h1', [_vm._v("Tasks")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('div', {
     staticClass: "modal fade",
     attrs: {
-      "id": "newTaskModal",
+      "id": "new-task-modal",
       "tabindex": "-1",
       "role": "dialog",
       "aria-labelledby": "newTaskModalLabel"
@@ -40872,7 +40898,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" Completed\n    ")]), _vm._v(" "), _c('ul', {
     staticClass: "task-list"
-  }, _vm._l((_vm.filteredTasks), function(task, index) {
+  }, [_vm._l((_vm.filteredTasks), function(task, index) {
     return _c('task', {
       key: task.id,
       attrs: {
@@ -40883,7 +40909,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "status": _vm.status
       }
     })
-  }))])
+  }), _vm._v(" "), _vm._l((_vm.filteredTasks), function(task, index) {
+    return _c('edit-task', {
+      attrs: {
+        "task": task,
+        "fetchTasks": _vm.fetchTasks,
+        "tasks": _vm.tasks
+      }
+    })
+  })], 2)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
     staticClass: "btn btn-primary",
@@ -40891,14 +40925,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button",
       "id": "btn-new-task",
       "data-toggle": "modal",
-      "data-target": "#newTaskModal"
+      "data-target": "#new-task-modal"
     }
   }, [_c('i', {
     staticClass: "fa fa-plus-circle",
     attrs: {
       "aria-hidden": "true"
     }
-  }), _vm._v("\n      New Task\n    ")])
+  }), _vm._v("\n        New Task\n    ")])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "modal-header"
@@ -40914,10 +40948,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "aria-hidden": "true"
     }
   }, [_vm._v("×")])]), _vm._v(" "), _c('h4', {
-    staticClass: "modal-title",
-    attrs: {
-      "id": "myModalLabel"
-    }
+    staticClass: "modal-title"
   }, [_vm._v("New Task")])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('button', {
@@ -40938,6 +40969,269 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-a77bab98", module.exports)
+  }
+}
+
+/***/ }),
+/* 54 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = {
+    props: {
+        task: Object,
+        fetchTasks: Function,
+        tasks: Array
+    },
+
+    data: function data() {
+        return {
+            editedTask: {
+                'title': this.task.title,
+                'parentId': this.task.parent_id
+            },
+            editTaskError: ''
+        };
+    },
+
+    methods: {
+        editTask: function editTask(taskId, editedTask) {
+            var self = this;
+
+            $.ajax({
+                url: 'api/tasks/' + taskId,
+                method: 'PUT',
+                data: editedTask
+            }).done(function (response) {
+                self.fetchTasks();
+                $('#edit-task-modal-' + self.task.id).modal('hide');
+            }).fail(function (response) {
+                var error = JSON.parse(response.responseText);
+                self.editTaskError = error.message;
+            });
+        }
+    }
+};
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(2)))
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(35)(
+  /* script */
+  __webpack_require__(54),
+  /* template */
+  __webpack_require__(56),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Users/ahsiao/Desktop/Programming/php/streamline/resources/assets/js/components/EditTask.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] EditTask.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7ce82777", Component.options)
+  } else {
+    hotAPI.reload("data-v-7ce82777", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal fade",
+    attrs: {
+      "id": 'edit-task-modal-' + _vm.task.id,
+      "tabindex": "-1",
+      "role": "dialog",
+      "aria-labelledby": "editTaskModalLabel"
+    }
+  }, [_c('div', {
+    staticClass: "modal-dialog modal-sm",
+    attrs: {
+      "role": "document"
+    }
+  }, [_c('div', {
+    staticClass: "modal-content"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "modal-body"
+  }, [(_vm.editTaskError) ? _c('div', {
+    staticClass: "alert alert-danger alert-dismissible fade in",
+    attrs: {
+      "role": "alert"
+    }
+  }, [_vm._m(1), _vm._v("\n                    " + _vm._s(_vm.editTaskError) + "\n                ")]) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "title"
+    }
+  }, [_vm._v("Task Title:")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model.trim",
+      value: (_vm.editedTask.title),
+      expression: "editedTask.title",
+      modifiers: {
+        "trim": true
+      }
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": _vm._s(_vm.editedTask.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.editedTask.title = $event.target.value.trim()
+      },
+      "blur": function($event) {
+        _vm.$forceUpdate()
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "parent-id"
+    }
+  }, [_vm._v("Parent Task ID:")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editedTask.parentId),
+      expression: "editedTask.parentId"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        _vm.editedTask.parentId = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        })[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": ""
+    }
+  }, [_vm._v("Optional")]), _vm._v(" "), _vm._l((_vm.tasks), function(task) {
+    return _c('option', [_vm._v(_vm._s(task.id))])
+  })], 2)])]), _vm._v(" "), _c('div', {
+    staticClass: "modal-footer"
+  }, [_c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal"
+    }
+  }, [_vm._v("Cancel")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.editTask(_vm.task.id, _vm.editedTask)
+      }
+    }
+  }, [_vm._v("Edit")])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "modal-header"
+  }, [_c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])]), _vm._v(" "), _c('h4', {
+    staticClass: "modal-title"
+  }, [_vm._v("Edit Task")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-label": "Close"
+    }
+  }, [_c('span', {
+    attrs: {
+      "aria-hidden": "true"
+    }
+  }, [_vm._v("×")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7ce82777", module.exports)
   }
 }
 

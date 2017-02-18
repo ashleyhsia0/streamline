@@ -39,6 +39,10 @@
 .item {
   display: flex;
 
+  &:hover .edit-task {
+    visibility: visible;
+  }
+
   input[type="checkbox"] {
     margin: 10px;
   }
@@ -69,10 +73,14 @@
     @include border-left($success);
   }
 
+  .status,
+  .edit-task {
+    padding: 5px 0;
+  }
+
   .status {
     margin-right: 10px;
     text-transform: uppercase;
-    // font-weight: bold;
 
     .in-progress {
       color: $danger;
@@ -85,6 +93,10 @@
     .completed {
       color: $success;
     }
+  }
+
+  .edit-task {
+    visibility: hidden;
   }
 }
 

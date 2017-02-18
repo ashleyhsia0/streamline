@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <taskslist></taskslist>
+    <tasks-list></tasks-list>
 
 @endsection
 

@@ -15,7 +15,6 @@
                 <p>
                     {{ task.title }}
                 </p>
-
                 <div class="relationships">
                     <!-- <span class="label label-primary">PARENT ID#{{ task.parent_id }}</span> -->
 
@@ -44,7 +43,8 @@
                               :index="index"
                               :toggleCheck="toggleCheck"
                               :getTasksByStatus="getTasksByStatus"
-                              :status="status">
+                              :status="status"
+                              >
                         </task>
                     </ul>
                 </div>
@@ -61,6 +61,13 @@
                     Completed
                 </span>
             </div>
+
+            <div class="edit-task">
+                <a :href="'#edit-task-modal-' + task.id" data-toggle="modal">
+                    <i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i>
+                </a>
+            </div>
+
         </div>
     </li>
 </template>

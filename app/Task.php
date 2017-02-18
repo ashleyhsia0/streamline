@@ -74,6 +74,9 @@ class Task extends Model
      */
     public function mark()
     {
+        $this->status = 1;
+        $this->save();
+
         // Base Case #1: If the task is incomplete after checking its dependencies
         if (!$this->isComplete()) {
             return;
@@ -114,5 +117,25 @@ class Task extends Model
                 $parent = $parent->parent()->first();
             }
         }
+    }
+
+    /**
+     * Check if the task is a descendant of the given ID for circular reference.
+     */
+    public function isDescendantOf($id)
+    {
+        $parent = $this->parent()->first();
+
+        // Base Case: There is no circular reference (parent doesn't exist)
+        if (!$parent) {
+            return false;
+        }
+
+        // Base Case: There is a circular reference when ID matches its parent/ascendant
+        if ($parent->id === $id) {
+            return true;
+        }
+
+        return $parent->isDescendantOf($id);
     }
 }

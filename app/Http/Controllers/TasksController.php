@@ -27,16 +27,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a new task in the database.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -63,10 +53,8 @@ class TasksController extends Controller
 
         $task = Task::create($input_array);
 
-        // Obtain record to get all attributes
-        $task = Task::find($task->id);
-
-        return $task;
+        // Re-query to obtain record that has all attributes
+        return Task::find($task->id);
     }
 
     /**
@@ -81,17 +69,6 @@ class TasksController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -100,7 +77,47 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $task = Task::find($id);
+
+        if (!isset($task)) {
+            return response()->json(['message' => 'Task ID does not exist'], 404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
+            'parentId' => 'nullable|exists:tasks,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Invalid input. Please try again.'], 400);
+        }
+
+        $task->title = $request->input('title');
+
+        if ($request->input('parentId') !== null) {
+            $newParent = Task::find($request->input('parentId'));
+
+            if ($newParent->id === $task->id) {
+                return response()->json(['message' => 'The parent task cannot be itself. Please try again.'], 400);
+            }
+
+            if ($newParent->isDescendantOf($task->id)) {
+                return response()->json(['message' => 'The parent task cannot be one of its dependencies. Please try again.'], 400);
+            }
+
+            $task->parent_id = $request->input('parentId');
+            $task->save();
+
+            if (!$newParent->isComplete()) {
+                $newParent->status = 1;
+                $newParent->save();
+            }
+        } else {
+            $task->parent_id = (int)0;
+            $task->save();
+        }
+
+        return $task;
     }
 
     /**
@@ -120,14 +137,11 @@ class TasksController extends Controller
         $status = $task->status;
 
         if ($status === 0) {
-            $task->status = 1;
             $task->mark();
         } else {
             $task->unmark();
             // TODO: Return a response to user that says status of parent task cannot be modified.
         }
-
-        $task->save();
 
         return $task;
     }

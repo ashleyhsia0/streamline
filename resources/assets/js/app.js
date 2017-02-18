@@ -13,8 +13,9 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('taskslist', require('./components/TasksList.vue'));
+Vue.component('tasks-list', require('./components/TasksList.vue'));
 Vue.component('task', require('./components/Task.vue'));
+Vue.component('edit-task', require('./components/EditTask.vue'));
 
 const app = new Vue({
     el: '#app'
