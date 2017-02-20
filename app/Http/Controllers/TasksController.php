@@ -42,6 +42,7 @@ class TasksController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Invalid input. Please try again.'], 400);
         }
+        // TODO: Put the validator into a helper function, since used in @update
 
         $input_array = ['title' => $request->input('title')];
 
@@ -91,6 +92,7 @@ class TasksController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Invalid input. Please try again.'], 400);
         }
+        // TODO: Put the validator into a helper function, since used in @store
 
         $task->title = $request->input('title');
 
