@@ -8346,10 +8346,6 @@ button.close {
   display: flex;
 }
 
-.item:hover .edit-task {
-  visibility: visible;
-}
-
 .item input[type="checkbox"] {
   margin: 10px;
 }
@@ -8402,10 +8398,6 @@ button.close {
 
 .item .status .completed {
   color: #5CB85C;
-}
-
-.item .edit-task {
-  visibility: hidden;
 }
 
 [v-cloak] {

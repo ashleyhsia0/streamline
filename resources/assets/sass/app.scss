@@ -39,9 +39,9 @@
 .item {
   display: flex;
 
-  &:hover .edit-task {
-    visibility: visible;
-  }
+  // &:hover .edit-task {
+  //   visibility: visible;
+  // }
 
   input[type="checkbox"] {
     margin: 10px;
@@ -95,9 +95,9 @@
     }
   }
 
-  .edit-task {
-    visibility: hidden;
-  }
+  // .edit-task {
+  //   visibility: hidden;
+  // }
 }
 
 [v-cloak] {
