@@ -66,6 +66,10 @@
                        :tasks="tasks">
             </edit-task>
         </ul>
+
+        <p v-if="filteredTasks.length < 1">
+          There are currently no tasks. Add a new task!
+        </p>
     </div>
 </template>
 
